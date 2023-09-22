@@ -14,4 +14,5 @@ class Player():
         self.mid_range_shoot = 0.4
         self.three_pointer = 0.2
         self.layup = 0.5
+        self.turn_over = 0.1
         self.total_points = 0
