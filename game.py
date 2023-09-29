@@ -8,10 +8,10 @@ import team
 
 
 class Game():
-    def __init__(self, name, ID):
-        self.name = name
+    def __init__(self, rule, ID):
+        self.rule = rule
         self.ID = ID
         self.status = "None"
-        self.round = 0 # either offense or offense is +1
+        self.round = 0 # 1 offense + 1 defense is 1 round
         self.homeTeam = None
         self.guestTeam = None
