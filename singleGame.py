@@ -47,7 +47,7 @@ def single_game_run():
     singleGame.guestTeam = GuestTeam
 
     print("Game:",ID)
-    for round in range(1, int(1E2)):
+    for round in range(1, int(3E2)):
         result = HomeTeam.offense()
         result = GuestTeam.offense()
         print("Round:(",round,")",
@@ -60,11 +60,9 @@ def single_game_run():
         if (GuestTeam.current_score>19):
             print("Team",GuestTeam.Name,"has WON!")
             break
-        
-        #Update the records
-        # singleGame.update()
 
-
+    HomeTeam.summary()
+    GuestTeam.summary()
     return
 
 
