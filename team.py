@@ -43,3 +43,8 @@ class Team():
             self.current_score += result
             #print("Team",self.Name,"score now is",self.current_score)
         return
+    
+    def summary(self):
+        print("Team",self.Name,"total points:",self.current_score)
+        for p in self.player_list:
+            p.summary()
