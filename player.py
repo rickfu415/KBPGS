@@ -10,7 +10,7 @@ import utility
 
 
 class Player():
-    def __init__(self, name, ID):
+    def __init__(self, name, ID, rule):
         self.name = name
         self.ID = ID
         self.mid_range_shoot = 0.3
@@ -20,6 +20,8 @@ class Player():
         self.total_points = 0
         self.choice_probability = None  # should be cumulative sections.
         self.statistics = {}
+        self.game_rule = {"Mid-range":rule[0], "Three-pointer":rule[1], "Layup":rule[0]}
+        print(self.game_rule)
 
     def initialize(self):
         vec = [self.mid_range_shoot, self.three_pointer, self.layup]
@@ -72,28 +74,28 @@ class Player():
             random.uniform(0, 1), self.choice_probability)
         if (choice == 0):
             if (self.mid_range_shoot > random.uniform(0, 1)):
-                self.total_points += 2
-                self.statistics["Mid-range"] += 2
+                self.total_points += self.game_rule["Mid-range"]
+                self.statistics["Mid-range"] += self.game_rule["Mid-range"]
                 print("--- ", self.name, " made a mid-range shot.")
-                return 2
+                return self.game_rule["Mid-range"]
             else:
                 print("--- ", self.name, " missed a mid-range shot.")
                 return 0
         elif (choice == 1):
             if (self.three_pointer > random.uniform(0, 1)):
-                self.total_points += 3
-                self.statistics["Three-pointer"] += 3
+                self.total_points += self.game_rule["Three-pointer"]
+                self.statistics["Three-pointer"] += self.game_rule["Three-pointer"]
                 print("--- ", self.name, " made a three_pointer shot.")
-                return 3
+                return self.game_rule["Three-pointer"]
             else:
                 print("--- ", self.name, " missed a three_pointer shot.")
                 return 0
         elif (choice == 2):
             if (self.layup > random.uniform(0, 1)):
-                self.total_points += 2
-                self.statistics["Layup"] += 2
+                self.total_points += self.game_rule["Layup"]
+                self.statistics["Layup"] += self.game_rule["Layup"]
                 print("--- ", self.name, " made a layup shot.")
-                return 2
+                return self.game_rule["Layup"]
             else:
                 print("--- ", self.name, " missed a layup shot.")
                 return 0

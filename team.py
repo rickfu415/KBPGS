@@ -11,7 +11,7 @@ import utility
 
 
 class Team():
-    def __init__(self, Name, ID):
+    def __init__(self, Name, ID, rule):
         self.Name = Name
         self.ID = ID
         self.status = "None" # either in Offense or Defense
@@ -19,6 +19,7 @@ class Team():
         self.player_list = []
         self.player_weights = [0.2, 0.2, 0.2, 0.2, 0.2] # needs to be based on capability
         self.offense_probability_range = None
+        self.game_rule = {"Mid-range":rule[0], "Three-pointer":rule[1], "Layup":rule[0]}
     
     def assemble(self): # call after all players are added
         self.player_weights = [0.2, 0.2, 0.2, 0.2, 0.2] # needs to be based on capability
