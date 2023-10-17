@@ -14,10 +14,21 @@ class Player():
         self.name = name
         self.ID = ID
         self.mid_range_shoot = 0.3
+        self.mid_range_offense = 0
+        self.mid_range_hit = 0
+        self.mid_range_game_hit_rate = 0
         self.three_pointer = 0.2
+        self.three_pointer_offense = 0
+        self.three_pointer_hit = 0
+        self.three_pointer_game_hit_rate = 0
         self.layup = 0.3
+        self.layup_offense = 0
+        self.layup_hit = 0
+        self.layup_game_hit_rate = 0
         self.mistake_to_turnover = 0.1
+        self.total_offense = 0
         self.total_points = 0
+        self.turn_over = 0
         self.choice_probability = None  # should be cumulative sections.
         self.statistics = {}
         self.game_rule = {"Mid-range":rule[0], "Three-pointer":rule[1], "Layup":rule[0]}
@@ -56,24 +67,31 @@ class Player():
               " Layup=", self.layup)
 
     def summary(self):
-        print("Player", self.name,
-              " Total points:", self.total_points,
-              " Mid-range", self.statistics["Mid-range"],
-              " Three-pointer", self.statistics["Three-pointer"],
-              " Layup", self.statistics["Layup"],)
+        print(self.name,
+              " Points:", self.total_points,
+              " # offense:", self.total_offense,
+              " Turn-over:", self.turn_over,
+              " Mid-range", self.statistics["Mid-range"],"(",self.mid_range_game_hit_rate,")",
+              " Three-pointer", self.statistics["Three-pointer"],"(",self.three_pointer_game_hit_rate,")",
+              " Layup", self.statistics["Layup"],"(",self.layup_game_hit_rate,")",
+              )
 
     def offense(self):
-        result = 0
+        self.total_offense += 1
         # determine if mistake  leads to turn over
         if (random.uniform(0, 1) < self.mistake_to_turnover):
             print("--- ", self.name, " missed and leads to turn over.")
+            self.turn_over += 1
             return -1
 
         # determine if mid-range, layup or three-pointer
         choice = utility.find_range(
             random.uniform(0, 1), self.choice_probability)
         if (choice == 0):
+            self.mid_range_offense += 1
             if (self.mid_range_shoot > random.uniform(0, 1)):
+                self.mid_range_hit += 1
+                self.mid_range_game_hit_rate = round(self.mid_range_hit / self.mid_range_offense*100, 2)
                 self.total_points += self.game_rule["Mid-range"]
                 self.statistics["Mid-range"] += self.game_rule["Mid-range"]
                 print("--- ", self.name, " made a mid-range shot.")
@@ -82,7 +100,10 @@ class Player():
                 print("--- ", self.name, " missed a mid-range shot.")
                 return 0
         elif (choice == 1):
+            self.three_pointer_offense += 1
             if (self.three_pointer > random.uniform(0, 1)):
+                self.three_pointer_hit += 1
+                self.three_pointer_game_hit_rate = round(self.three_pointer_hit / self.three_pointer_offense*100, 2)
                 self.total_points += self.game_rule["Three-pointer"]
                 self.statistics["Three-pointer"] += self.game_rule["Three-pointer"]
                 print("--- ", self.name, " made a three_pointer shot.")
@@ -91,16 +112,18 @@ class Player():
                 print("--- ", self.name, " missed a three_pointer shot.")
                 return 0
         elif (choice == 2):
+            self.layup_offense += 1
             if (self.layup > random.uniform(0, 1)):
+                self.layup_hit += 1
+                self.layup_game_hit_rate = round(self.layup_hit / self.layup_offense*100, 2)
                 self.total_points += self.game_rule["Layup"]
                 self.statistics["Layup"] += self.game_rule["Layup"]
+
                 print("--- ", self.name, " made a layup shot.")
                 return self.game_rule["Layup"]
             else:
                 print("--- ", self.name, " missed a layup shot.")
                 return 0
-
-        return result
 
 
 if __name__ == "__main__":
