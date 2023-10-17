@@ -12,16 +12,16 @@ import game
 import team
 
 
-def single_game_run(rule):
-    number_of_players = 5
+def single_game_run(number_of_players, rule):
+    
     HomeTeam = team.Team("Home", 1, rule)
     for i in range(1, number_of_players+1):
         name = "Home_player_" + str(i)
         ID = i
         _player = player.Player(name, ID, rule)
-        _player.mid_range_shoot += random.uniform(-0.1, 0.1)
-        _player.layup += random.uniform(-0.1, 0.1)
-        _player.three_pointer += random.uniform(-0.1, 0.1)
+        _player.mid_range_shoot += random.uniform(-0.1, 0.1)    #adding some uncertainty 
+        _player.layup += random.uniform(-0.1, 0.1)              #adding some uncertainty 
+        _player.three_pointer += random.uniform(-0.1, 0.1)      #adding some uncertainty 
         _player.initialize()
         _player.show()
         HomeTeam.player_list.append(_player)
@@ -32,9 +32,9 @@ def single_game_run(rule):
         name = "Guest_player_" + str(i)
         ID = i
         _player = player.Player(name, ID, rule)
-        _player.mid_range_shoot += random.uniform(-0.1, 0.1)
-        _player.layup += random.uniform(-0.1, 0.1)
-        _player.three_pointer += random.uniform(-0.1, 0.1)
+        _player.mid_range_shoot += random.uniform(-0.1, 0.1)    #adding some uncertainty 
+        _player.layup += random.uniform(-0.1, 0.1)              #adding some uncertainty 
+        _player.three_pointer += random.uniform(-0.1, 0.1)      #adding some uncertainty 
         _player.initialize()
         _player.show()
         GuestTeam.player_list.append(_player)
@@ -48,7 +48,7 @@ def single_game_run(rule):
 
     print("Game:",ID)
     end = False
-    for round in range(1, int(3E2)):
+    for round in range(1, int(1E4)):
         result = HomeTeam.offense()
         if (HomeTeam.current_score>=rule[2]):
             print("Team",HomeTeam.Name,"has WON!")
@@ -75,4 +75,5 @@ if __name__ == "__main__":
     # Game Rule (2,3,30) or (1,2,15)
     rule = (2, 3, 30)
     rule = (1, 2, 15)
-    single_game_run(rule)
+    number_of_players = 5
+    single_game_run(number_of_players, rule)
