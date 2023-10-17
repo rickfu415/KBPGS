@@ -20,6 +20,7 @@ class Team():
         self.player_weights = [0.2, 0.2, 0.2, 0.2, 0.2] # needs to be based on capability
         self.offense_probability_range = None
         self.game_rule = {"Mid-range":rule[0], "Three-pointer":rule[1], "Layup":rule[0]}
+        self.statistics = {}
     
     def assemble(self): # call after all players are added
         self.player_weights = [0.2, 0.2, 0.2, 0.2, 0.2] # needs to be based on capability
@@ -46,6 +47,7 @@ class Team():
         return
     
     def summary(self):
+        print("-"*120)
         print("Team",self.Name,"total points:",self.current_score)
         for p in self.player_list:
             p.summary()
